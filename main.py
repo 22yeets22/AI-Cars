@@ -2,6 +2,7 @@ import math
 import neat
 import pygame
 from time import time
+from tkinter import Tk, Label
 
 WIDTH = 1920
 HEIGHT = 1060
@@ -60,7 +61,7 @@ class Car:
 
         # While We Don't Hit BORDER_COLOR AND length < 300 (just a max) -> go further and further
         while not game_map.get_at((x, y)) == BORDER_COLOR and length < 300:
-            length = length + 1
+            length += 1  # accuracy
             x = int(self.center[0] + math.cos(math.radians(360 - (self.angle + degree))) * length)
             y = int(self.center[1] + math.sin(math.radians(360 - (self.angle + degree))) * length)
 
@@ -111,7 +112,8 @@ class Car:
     def is_alive(self): return self.alive
 
     def get_reward(self):
-        return self.distance / (CAR_SIZE_X / 2) + self.speed  # i added speed here
+        # Criteria: speed, distance, no crash
+        return self.distance * self.speed / CAR_SIZE_X  # i added speed here
 
     def rotate_center(self, image, angle):
         rectangle = image.get_rect()
@@ -123,9 +125,12 @@ class Car:
 
 
 def run_simulation(genomes, config):
-    MAP_NUMBER = 3
     nets = []
     cars = []
+
+    window = Tk()
+    window.title("AI Cars [Info]")
+    window.geometry("200x100+400+300")  # Fixed geometry (width, height, x, y)
 
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -138,9 +143,6 @@ def run_simulation(genomes, config):
         cars.append(Car())
 
     clock = pygame.time.Clock()
-    generation_font = pygame.font.SysFont("Arial", 34)
-    alive_font = pygame.font.SysFont("Arial", 18)
-
     raw_map = pygame.image.load(f"maps/map{MAP_NUMBER}.png")
     game_map = pygame.transform.scale(raw_map, (WIDTH, HEIGHT)).convert()
 
@@ -183,22 +185,24 @@ def run_simulation(genomes, config):
             if car.is_alive():
                 car.draw(screen)
 
-        text = generation_font.render("Generation: " + str(current_generation), True, (0, 0, 0))
-        text_rect = text.get_rect()
-        text_rect.center = (900, 450)
-        screen.blit(text, text_rect)
-        text = alive_font.render("Still Alive: " + str(still_alive), True, (0, 0, 0))
-        text_rect = text.get_rect()
-        text_rect.center = (900, 490)
-        screen.blit(text, text_rect)
+        # Tkinter
+        for widget in window.winfo_children():
+            widget.destroy()
+        Label(window, text="Generation: " + str(current_generation)).pack()
+        Label(window, text="Still Alive: " + str(still_alive)).pack()
+        window.update()
 
         pygame.display.flip()
         clock.tick(60)
 
     pygame.quit()
+    window.destroy()
 
 
 if __name__ == "__main__":
+    # Init variables
+    MAP_NUMBER = 3
+
     # Load Config
     config_path = "./config.txt"
     config = neat.config.Config(neat.DefaultGenome,
