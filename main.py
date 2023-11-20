@@ -188,8 +188,8 @@ def run_simulation(genomes, config):
         # Tkinter
         for widget in window.winfo_children():
             widget.destroy()
-        Label(window, text="Generation: " + str(current_generation)).pack()
-        Label(window, text="Still Alive: " + str(still_alive)).pack()
+        Label(window, text=f"Generation: {current_generation}", font=('Helvetica bold', 40)).pack()
+        Label(window, text=f"Still Alive: {still_alive}", font=('Helvetica bold', 40)).pack()
         window.update()
 
         pygame.display.flip()
