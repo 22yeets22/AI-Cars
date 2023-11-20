@@ -55,7 +55,7 @@ class Car:
                 self.alive = False
                 break
 
-    def check_radar(self, degree, game_map):
+    def check_radar_old(self, degree, game_map):
         length = 0
         x = int(self.center[0] + math.cos(math.radians(360 - (self.angle + degree))) * length)
         y = int(self.center[1] + math.sin(math.radians(360 - (self.angle + degree))) * length)
@@ -67,6 +67,23 @@ class Car:
             y = int(self.center[1] + math.sin(math.radians(360 - (self.angle + degree))) * length)
 
         dist = int(math.sqrt(math.pow(x - self.center[0], 2) + math.pow(y - self.center[1], 2)))
+        self.radars.append([(x, y), dist])
+
+    
+    def check_radar(self, degree, game_map):
+        x, y = self.center[0], self.center[1]
+        
+        # Get the angle in radians
+        angle_rad = math.radians(360 - (self.angle + degree))
+        
+        for length in range(1, MAX_DISTANCE + 1):
+            x = int(x + math.cos(angle_rad) * length)
+            y = int(y + math.sin(angle_rad) * length)
+            
+            if not game_map.get_at((x, y)) == BORDER_COLOR:
+                break
+    
+        dist = int(math.sqrt((x - self.center[0])**2 + (y - self.center[1])**2))
         self.radars.append([(x, y), dist])
 
     def update(self, game_map):
