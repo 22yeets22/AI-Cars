@@ -1,6 +1,7 @@
 import math
 import neat
 import pygame
+import sys
 from time import time
 from tkinter import Tk, Label
 
@@ -155,7 +156,7 @@ def run_simulation(genomes, config):
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                sys.exit()
 
         # For each car get the acton it takes
         for i, car in enumerate(cars):
@@ -175,11 +176,10 @@ def run_simulation(genomes, config):
                 car.update(game_map)
                 genomes[i][1].fitness += car.get_reward()
 
-        if still_alive == 0:
-            running = False
-        if time() - start > 10:
+        if still_alive == 0 or time() - start > 10:
             running = False
 
+        # Render
         screen.blit(game_map, (0, 0))
         for car in cars:
             if car.is_alive():
