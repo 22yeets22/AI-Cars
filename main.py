@@ -3,7 +3,6 @@ import neat
 import pygame
 import sys
 import os
-from time import time
 from tkinter import Tk, Label
 
 from constants import *
