@@ -1,5 +1,7 @@
 # AI Cars
 ## Evolutionary neural networks in Python
+
+![Thumbnail]((https://github.com/22yeets22/AI-Cars/blob/main/AI-Cars.png) "Thumbnail")
 AI powered cars in Python!
 
 ## Features
