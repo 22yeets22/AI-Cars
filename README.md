@@ -15,9 +15,9 @@ AI powered cars in Python!
 ## Requirements
 - Python 3.7+
 - Libraries:
-- os
-- sys
-- math
-- neat
-- tkinter
-- pygame
+    - os
+    - sys
+    - math
+    - neat
+    - tkinter
+    - pygame
