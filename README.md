@@ -1,7 +1,7 @@
 # AI Cars
 ## Evolutionary neural networks in Python
 
-![Thumbnail](([https://github.com/22yeets22/AI-Cars/blob/main/AI-Cars.png](https://github.com/22yeets22/AI-Cars/blob/main/AI-Cars.png?raw=true)) "Thumbnail")
+[![Thumbnail](([https://github.com/22yeets22/AI-Cars/blob/main/AI-Cars.png](https://github.com/22yeets22/AI-Cars/blob/main/AI-Cars.png?raw=true)) "Thumbnail")](https://github.com/22yeets22/AI-Cars/blob/main/AI-Cars.png?raw=true)
 AI powered cars in Python!
 
 ## Features
